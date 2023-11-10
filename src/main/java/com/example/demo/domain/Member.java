@@ -17,11 +17,11 @@ public class Member {
 
     private String email; // 이메일
 
-    private String username;
+    private String username; // 이름
 
-    private String birthday;
+    private String birthday; // 생일
 
-    private String password;
+    private String password; // 패스워드
 
-    private String phonenumber;
+    private String phonenumber; // 핸드폰번호
 }

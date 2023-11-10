@@ -14,7 +14,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class MemberControll {
+public class MemberController {
 
     private final MemberService memberService;
 
@@ -47,4 +47,5 @@ public class MemberControll {
         model.addAttribute("members",members);
         return "members/memberList";
     }
+
 }
