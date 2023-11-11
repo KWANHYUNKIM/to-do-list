@@ -4,21 +4,24 @@ package com.example.demo.controller;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Getter @Setter
 
 public class MemberForm {
 
-    @NotEmpty(message = "회원 이름은 필수 입니다.")
+    @NotEmpty(message = "ex) 홍길동.")
     private String username;
-    @NotEmpty(message = "이메일 이름은 필수 입니다.")
+
+    @Email @NotEmpty(message = "4~15자 이내로 입력해주세요.")
     private String email;
-    @NotEmpty(message = "생년월일은 필수 입니다.")
+    @NotEmpty(message = "ex) 950326.")
     private String birthday;
-    @NotEmpty(message = "비밀번호는 필수 입니다.")
+
+    @Password @NotEmpty
     private String password;
-    @NotEmpty(message = "핸드폰번호는 필수 입니다.")
+    @NotEmpty(message = "ex) 010-1234-5678.")
     private String phonenumber;
 
 
