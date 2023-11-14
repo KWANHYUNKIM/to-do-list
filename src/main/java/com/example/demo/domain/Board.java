@@ -6,12 +6,16 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import com.example.demo.domain.Member;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
 @Entity
 @Getter @Setter
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "borads")
 public class Board {
     @Id
@@ -38,5 +42,11 @@ public class Board {
 
     @LastModifiedDate
     private LocalDateTime modifiedDate;
+
+    //==연관관계 메서드==//
+
+    public void setMember (Member member) {
+        this.member = member;
+    }
 
 }

@@ -13,7 +13,6 @@
     <div>
         <form role="form" action="/members/board" th:object="${boardForm}" method="post">
             <div class="form-group">
-
                 <label th:for="title">타이틀</label>
                 <input type="text" th:field="*{title}" class="form-control" placeholder="타이틀을 입력하세요"
                        th:class="${#fields.hasErrors('title')}? 'form-control fieldError' : 'form-control'">

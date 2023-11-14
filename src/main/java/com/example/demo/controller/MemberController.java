@@ -37,7 +37,7 @@ public class MemberController {
         member.setBirthday(form.getBirthday());
         member.setPassword(form.getPassword());
         member.setPhonenumber(form.getPhonenumber());
-
+        member.setPosition("client");
         memberService.join(member);
         return "redirect:/";
     }

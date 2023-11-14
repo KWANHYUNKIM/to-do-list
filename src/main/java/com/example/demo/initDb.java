@@ -17,6 +17,7 @@ public class initDb {
     @PostConstruct
     public void init(){
         initService.dbInit1();
+        initService.dbInit2();
     }
 
     @Component
@@ -28,18 +29,25 @@ public class initDb {
 
         public void dbInit1() {
             System.out.println("Init1" + this.getClass());
-            Member member = createMember("molba06@naver.com", "김관현"," 950326","1234","010-6620-2454");
+            Member member = createMember("molba06@naver.com", "김관현"," 950326","1234","010-6620-2454","client");
+            em.persist(member);
+        }
+
+        public void dbInit2() {
+            System.out.println("Init2" + this.getClass());
+            Member member = createMember("manager@gmail.com", "김매니저","비공개","1234","비공개","manager");
             em.persist(member);
         }
     }
 
-    private static Member createMember(String email, String username, String birthday, String password, String phonenumber) {
+    private static Member createMember(String email, String username, String birthday, String password, String phonenumber, String position) {
         Member member = new Member();
         member.setEmail(email);
         member.setUsername(username);
         member.setBirthday(birthday);
         member.setPassword(password);
         member.setPhonenumber(phonenumber);
+        member.setPosition(position);
         return member;
     }
 }

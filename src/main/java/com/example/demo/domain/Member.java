@@ -1,9 +1,12 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -22,4 +25,6 @@ public class Member {
     private String password; // 패스워드
 
     private String phonenumber; // 핸드폰번호
+
+    private String position; // Manager, Owner, Client
 }

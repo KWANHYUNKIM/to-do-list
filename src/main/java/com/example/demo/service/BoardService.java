@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.domain.Board;
 import com.example.demo.domain.Member;
 import com.example.demo.repository.BoardRepository;
+import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +17,15 @@ import java.util.Optional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-
     /**
      * 게시글 생성
      */
+
     @Transactional
     public Long join(Board board){
+
         validateDuplicateTitle(board); // 중복 타이틀 검증
+
         boardRepository.save(board);
         return board.getId();
     }
