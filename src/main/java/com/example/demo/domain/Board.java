@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
@@ -38,15 +39,23 @@ public class Board {
     private char deleteYn; // 삭제 여부
 
     @CreatedDate
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdDate;
 
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 
     //==연관관계 메서드==//
-
     public void setMember (Member member) {
         this.member = member;
+    }
+
+    //==비즈니스 로직==//
+    /**
+     * 게시글 삭제
+     */
+    public void cancel() {
+
     }
 
 }

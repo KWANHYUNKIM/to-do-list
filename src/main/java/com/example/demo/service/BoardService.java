@@ -17,12 +17,13 @@ import java.util.Optional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+
     /**
      * 게시글 생성
      */
 
     @Transactional
-    public Long join(Board board){
+    public Long join(Board board) {
 
         validateDuplicateTitle(board); // 중복 타이틀 검증
 
@@ -33,14 +34,15 @@ public class BoardService {
     private void validateDuplicateTitle(Board board) {
         Optional<Board> findboard = boardRepository.findByTitle(board.getTitle());
 
-        if(!findboard.isEmpty()){
+        if (!findboard.isEmpty()) {
             throw new IllegalStateException("중복된 게시판 이름 입니다.");
         }
     }
+
     /**
      * 게시글 리스트 조회
      */
-    public List<Board> findBoard(){
+    public List<Board> findBoard() {
         return boardRepository.findAll();
     }
 
@@ -51,4 +53,12 @@ public class BoardService {
     /**
      * 게시글 삭제
      */
+    @Transactional
+    public Long cancelBoard(Long orderId) {
+        //주문 엔티티 조회
+        Board board = boardRepository.findOne(orderId);
+        //주문 취소
+        board.cancel();
+        return orderId;
+    }
 }

@@ -11,13 +11,34 @@
       <tr>
         <th>타이틀</th>
         <th>컨텐츠</th>
+        <th>작성자</th>
+        <th>작성일자</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="boards : ${boards}">
         <td th:text="${boards.title}"></td>
         <td th:text="${boards.content}"></td>
+        <td th:text="${boards.member.username}"></td>
+        <td th:text="${boards.createdDate.year} + '-' + ${boards.createdDate.monthValue} + '-' + ${boards.createdDate.dayOfMonth}"></td>
+
+        <!-- 수정 버튼 -->
+        <td>
+          <a th:if="${session.loginMember.username != null and session.loginMember.id == boards.member.id}">
+             href="/edit/{id}" class="btn btn-primary">수정</a>
+        </td>
+
+        <!-- 삭제 버튼 -->
+        <td>
+          <a th:if="${session.loginMember.username != null and session.loginMember.id == boards.member.id}"
+                  href="#" th:hhref="'javascript:cancel('+${boards.member.id}+')'"
+                  class="btn btn-danger">삭제</a>
+        </td>
       </tr>
+
+      <!-- 수정 버튼 -->
+
+
       </tbody>
     </table>
   </div>

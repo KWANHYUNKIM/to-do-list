@@ -6,6 +6,7 @@ import com.example.demo.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,14 +32,17 @@ public class LoginController {
     }
 
     @PostMapping("/members/login")
-    public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,HttpServletRequest request){
+    public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletRequest request, Model model){
         Member loginMember = loginService.login(form.getEmail(), form.getPassword());
 
         if(bindingResult.hasErrors()){
+            model.addAttribute("error","입력값을 확인해주세요");
+
             return "login/createLoginForm";
         }
             if(loginMember == null){
                 bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+                model.addAttribute("error","아이디 또는 비밀번호가 맞지 않습니다.");
                 return "login/createLoginForm";
             }
 

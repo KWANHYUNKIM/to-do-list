@@ -26,9 +26,10 @@
                th:class="${#fields.hasErrors('password')}? 'form-control fieldError' : 'form-control'">
         <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect date</p>
       </div>
+
       <button type="submit" class="btn btn-primary">Submit</button>
-      <div th:if="${#fields.hasGlobalErrors()}">
-        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+      <div th:if="${error != null}">
+        <p th:text="${error}"></p>
       </div>
 
     </form>
@@ -36,6 +37,7 @@
     <div th:replace="fragments/footer :: footer" />
 
 </div> <!-- /container -->
+
 
 </body>
 </html>

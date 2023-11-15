@@ -32,11 +32,13 @@ public class BoardRepository {
     }
 
     // 타이틀 중복
-
     public Optional<Board> findByTitle(String title){
         return findAll().stream()
                 .filter(m ->m.getTitle().equals(title))
                 .findFirst();
     }
-
+    // 게시판 검색
+    public Board findOne(Long id){
+        return em.find(Board.class, id);
+    }
 }
