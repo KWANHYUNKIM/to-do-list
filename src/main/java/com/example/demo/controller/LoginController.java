@@ -23,8 +23,6 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class LoginController {
     private final LoginService loginService;
-    private HttpServletResponse response;
-    private SessionManager sessionManger;
 
     @GetMapping("/members/login")
     public String loginForm(@ModelAttribute("LoginForm") LoginForm form){

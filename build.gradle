@@ -38,6 +38,8 @@ dependencies {
 	implementation 'org.glassfish:javax.json:1.1'
     implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// 회원가입 & 로그인 기능 by Security
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.4.5'
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'

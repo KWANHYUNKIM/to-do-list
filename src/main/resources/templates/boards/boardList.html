@@ -6,6 +6,13 @@
 <div class="container">
   <div th:replace="fragments/bodyHeader :: bodyHeader" />
   <div>
+    <!-- 검색 -->
+    <form th:action="@{/search}" method="post">
+      <label for="query">Search:</label>
+      <input type="text" id="query" name="query">
+      <button type="submit">Search</button>
+    </form>
+
     <table class="table table-striped">
       <thead>
       <tr>
@@ -22,9 +29,10 @@
         <td th:text="${boards.member.username}"></td>
         <td th:text="${boards.createdDate.year} + '-' + ${boards.createdDate.monthValue} + '-' + ${boards.createdDate.dayOfMonth}"></td>
 
+
         <!-- 수정 버튼 -->
         <td>
-          <a th:if="${session.loginMember.username != null and session.loginMember.id == boards.member.id}">
+          <a th:if="${session.loginMember.username != null and session.loginMember.id == boards.member.id}"
              href="/edit/{id}" class="btn btn-primary">수정</a>
         </td>
 

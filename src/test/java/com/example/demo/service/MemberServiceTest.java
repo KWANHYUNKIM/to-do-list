@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,15 +23,20 @@ public class MemberServiceTest {
     @Autowired MemberService memberService;
     @Autowired MemberRepository memberRepositor;
     @Autowired EntityManager em;
+    @Autowired PasswordEncoder passwordEncoder;
 
     @Test
     public void 회원가입() throws Exception{
         //given
+        String password = "ehsqjfwk123!";
+        String encodePassword = passwordEncoder.encode(password);
+
         Member member = new Member();
         member.setUsername("kim");
         member.setBirthday("950326");
         member.setEmail("molba06@naver.com");
-        member.setPassword("qwer1234");
+
+        member.setPassword(encodePassword);
         member.setPhonenumber("010-1234-1234");
         //when
         Long saveId = memberService.join(member);
