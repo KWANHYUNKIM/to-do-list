@@ -46,6 +46,8 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
+    public Board findBoardByDetail(Long id) {return boardRepository.findOne(id);}
+
     public List<Board> findByAll (String title) {return boardRepository.findByAll(title);}
     /**
      * 게시글 수정

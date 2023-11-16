@@ -79,18 +79,17 @@ public class BoardController {
      * 세부 게시판
      */
 
-    //@GetMapping("/boards/{boardId}")
-    //public String viewBoardDetails(@PathVariable("boardId") Long boardId, Model model) {
-    //    Board board = boardService.getBoardById(boardId);
+    @GetMapping("/boards/{boardId}")
+    public String viewBoardDetails(@PathVariable("boardId") Long boardId, Model model) {
+        Board board = boardService.findBoardByDetail(boardId);
 
-    //    if (board == null) {
+        if (board == null) {
             // 게시판이 존재하지 않을 경우 예외 처리 또는 적절한 처리를 수행
-    //        return "error";
-    //    }
+            return "error";
+        }
 
-    //    model.addAttribute("board", board);
-    //    return "board/details";
-    //}
+        model.addAttribute("board", board);
+        return "boards/details";
+    }
 }
 
-}
