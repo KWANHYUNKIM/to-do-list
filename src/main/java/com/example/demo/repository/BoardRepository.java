@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,9 +20,17 @@ public class BoardRepository {
     public void save(Board board) {
         em.persist(board);
     }
+
+    // 게시판 전체 검색
     public List<Board> findAll() {
         return em.createQuery("select m from Board m", Board.class)
                 .getResultList();
+    }
+
+    public List<Board> findByAll(String title) {
+        return findAll().stream()
+                .filter(m -> m.getTitle().equals(title))
+                .collect(Collectors.toList());
     }
 
     // 게시판 삭제

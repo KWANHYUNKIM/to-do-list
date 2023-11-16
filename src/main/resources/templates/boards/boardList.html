@@ -7,11 +7,13 @@
   <div th:replace="fragments/bodyHeader :: bodyHeader" />
   <div>
     <!-- 검색 -->
-    <form th:action="@{/search}" method="post">
+    <form th:action="@{/boards/search}" method="GET">
       <label for="query">Search:</label>
       <input type="text" id="query" name="query">
       <button type="submit">Search</button>
     </form>
+
+
 
     <table class="table table-striped">
       <thead>

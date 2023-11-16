@@ -6,6 +6,7 @@ import com.example.demo.service.BoardService;
 import com.example.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.Parameter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,5 +59,13 @@ public class BoardController {
     public String cancelBoard(@PathVariable("memberId") Long memberId){
         boardService.cancelBoard(memberId);
         return "redirect:/members/board";
+    }
+
+    @GetMapping("/boards/search")
+    public String find(@RequestParam("query") String query, Model model){
+        System.out.println("query 값 " + query);
+        List<Board> boards = boardService.findByAll(query);
+        model.addAttribute("boards",boards);
+        return "boards/boardList";
     }
 }

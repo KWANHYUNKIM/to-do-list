@@ -46,6 +46,7 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
+    public List<Board> findByAll (String title) {return boardRepository.findByAll(title);}
     /**
      * 게시글 수정
      */
