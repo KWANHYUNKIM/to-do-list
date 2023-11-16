@@ -5,6 +5,7 @@ import com.example.demo.domain.Member;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,10 +57,30 @@ public class BoardService {
     /**
      * 게시글 삭제
      */
-
     @Transactional
     public void deleteBoard(Long boardId) {
 
         boardRepository.deleteById(boardId);
+    }
+
+    /**
+     *  게시글 정렬
+     */
+    @Transactional
+    public List<Board> getAllBoardsSortedBy(String sort) {
+        //Sort.Direction direction = Sort.Direction.DESC; // 기본적으로 내림차순 정렬
+        //if ("title".equals(sort)) {
+        //    return boardRepository.findAll(Sort.by(direction,"title"));
+        //} else if ("createdDate".equals(sort)) {
+        //    return boardRepository.findAll(Sort.by(direction, "createdDate"));
+        //}
+        // 다른 정렬 기준이 필요한 경우에도 추가 가능
+
+        return boardRepository.findAll(); // 정렬 기준이 없는 경우 기본적으로 전체 목록 반환
+    }
+
+    @Transactional
+    public void incrementViewCount(Long boardId) {
+        boardRepository.incrementViewCount(boardId);
     }
 }

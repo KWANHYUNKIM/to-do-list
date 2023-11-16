@@ -36,6 +36,9 @@ public class Board {
     @ColumnDefault("0")
     private int viewCount;
 
+    @ColumnDefault("0")
+    private int likes;
+
     private char deleteYn; // 삭제 여부
 
     @CreatedDate

@@ -13,40 +13,39 @@
       <button type="submit">Search</button>
     </form>
 
-
-
     <table class="table table-striped">
       <thead>
       <tr>
-        <th>타이틀</th>
-        <th>컨텐츠</th>
+        <th>제목</th>
         <th>작성자</th>
-        <th>작성일자</th>
+        <th>조회수</th>
+        <th>좋아요</th>
+        <th>작성날짜</th>
+        <th>수정</th>
+        <th>삭제</th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="boards : ${boards}">
+      <tr th:each="board : ${boards}">
         <td>
-          <a th:href="@{/boards/{boardId}(boardId=${boards.id})}" th:text="${boards.title}"></a>
+          <a th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.title}"></a>
         </td>
-        <td th:text="${boards.content}"></td>
-        <td th:text="${boards.member.username}"></td>
-        <td th:text="${boards.createdDate.year} + '-' + ${boards.createdDate.monthValue} + '-' + ${boards.createdDate.dayOfMonth}"></td>
-
+        <td th:text="${board.member.username}"></td>
+        <td th:text="${board.viewCount}"></td>
+        <td th:text="${board.likes}"></td>
+        <td th:text="${board.createdDate.year} + '-' + ${board.createdDate.monthValue} + '-' + ${board.createdDate.dayOfMonth}"></td>
 
         <!-- 수정 버튼 -->
         <td>
-          <a th:if="${session.loginMember.username != null and session.loginMember.id == boards.member.id}"
-             href="/boards/edit" class="btn btn-primary">수정</a>
+          <a th:if="${session.loginMember.username != null and session.loginMember.id == board.member.id}"
+             th:href="@{/boards/edit/{boardId}(boardId=${board.id})}" class="btn btn-primary">수정</a>
         </td>
         <!-- 삭제 버튼 -->
         <td>
-        <a th:if="${session.loginMember.username != null and session.loginMember.id == boards.member.id}"
-           th:href="@{/boards/delete/{boardId}(boardId=${boards.id})}" class="btn btn-danger">삭제</a>
+          <a th:if="${session.loginMember.username != null and session.loginMember.id == board.member.id}"
+             th:href="@{/boards/delete/{boardId}(boardId=${board.id})}" class="btn btn-danger">삭제</a>
         </td>
-
-
-
+      </tr>
       </tbody>
     </table>
   </div>

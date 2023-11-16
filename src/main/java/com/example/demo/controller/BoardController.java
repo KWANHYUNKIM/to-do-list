@@ -78,7 +78,6 @@ public class BoardController {
     /*
      * 세부 게시판
      */
-
     @GetMapping("/boards/{boardId}")
     public String viewBoardDetails(@PathVariable("boardId") Long boardId, Model model) {
         Board board = boardService.findBoardByDetail(boardId);
@@ -88,8 +87,22 @@ public class BoardController {
             return "error";
         }
 
+        // 조회수 증가 로직 추가
+        boardService.incrementViewCount(boardId);
+
         model.addAttribute("board", board);
         return "boards/details";
     }
+    /*
+     * 정렬
+     */
+    @GetMapping("/boards")
+    public String getBoards(Model model, @RequestParam(name = "sort", defaultValue = "createdDate") String sort) {
+        List<Board> boards = boardService.getAllBoardsSortedBy(sort);
+        model.addAttribute("boards", boards);
+        model.addAttribute("currentSort", sort);
+        return "boards/boardList";
+    }
+
 }
 
