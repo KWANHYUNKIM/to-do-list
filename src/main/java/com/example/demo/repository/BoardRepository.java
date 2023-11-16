@@ -34,10 +34,9 @@ public class BoardRepository {
     }
 
     // 게시판 삭제
-    public Optional<Board> findByBoard(String username){
-        return findAll().stream()
-                .filter(m -> m.getMember().getUsername().equals(username))
-                .findFirst();
+    public void deleteById(Long boardId){
+            Board board = findOne(boardId);
+            em.remove(board);
     }
 
     // 타이틀 중복

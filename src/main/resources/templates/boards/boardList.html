@@ -35,18 +35,14 @@
         <!-- 수정 버튼 -->
         <td>
           <a th:if="${session.loginMember.username != null and session.loginMember.id == boards.member.id}"
-             href="/edit/{id}" class="btn btn-primary">수정</a>
+             href="/boards/edit" class="btn btn-primary">수정</a>
         </td>
-
         <!-- 삭제 버튼 -->
         <td>
-          <a th:if="${session.loginMember.username != null and session.loginMember.id == boards.member.id}"
-                  href="#" th:hhref="'javascript:cancel('+${boards.member.id}+')'"
-                  class="btn btn-danger">삭제</a>
+        <a th:if="${session.loginMember.username != null and session.loginMember.id == boards.member.id}"
+           th:href="@{/boards/delete/{boardId}(boardId=${boards.id})}" class="btn btn-danger">삭제</a>
         </td>
-      </tr>
 
-      <!-- 수정 버튼 -->
 
 
       </tbody>

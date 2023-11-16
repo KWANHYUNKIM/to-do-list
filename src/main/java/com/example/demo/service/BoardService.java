@@ -54,12 +54,10 @@ public class BoardService {
     /**
      * 게시글 삭제
      */
+
     @Transactional
-    public Long cancelBoard(Long orderId) {
-        //주문 엔티티 조회
-        Board board = boardRepository.findOne(orderId);
-        //주문 취소
-        board.cancel();
-        return orderId;
+    public void deleteBoard(Long boardId) {
+
+        boardRepository.deleteById(boardId);
     }
 }

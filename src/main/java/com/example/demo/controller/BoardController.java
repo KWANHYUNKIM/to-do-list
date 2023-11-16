@@ -55,17 +55,42 @@ public class BoardController {
         return "boards/boardList";
     }
 
-    @PostMapping("/members/{memberId}/cancel")
-    public String cancelBoard(@PathVariable("memberId") Long memberId){
-        boardService.cancelBoard(memberId);
-        return "redirect:/members/board";
-    }
 
     @GetMapping("/boards/search")
     public String find(@RequestParam("query") String query, Model model){
-        System.out.println("query 값 " + query);
+
         List<Board> boards = boardService.findByAll(query);
         model.addAttribute("boards",boards);
         return "boards/boardList";
     }
+
+    /*
+     * 게시판 삭제
+     */
+    @GetMapping("/boards/delete/{boardId}")
+    public String deleteBoard(@PathVariable("boardId") Long boardId){
+        System.out.println("BOARDID = " + boardId);
+        boardService.deleteBoard(boardId);
+
+        return "boards/boardList";
+    }
+
+    /*
+     * 세부 게시판
+     */
+
+    //@GetMapping("/boards/{boardId}")
+    //public String viewBoardDetails(@PathVariable("boardId") Long boardId, Model model) {
+    //    Board board = boardService.getBoardById(boardId);
+
+    //    if (board == null) {
+            // 게시판이 존재하지 않을 경우 예외 처리 또는 적절한 처리를 수행
+    //        return "error";
+    //    }
+
+    //    model.addAttribute("board", board);
+    //    return "board/details";
+    //}
+}
+
 }
