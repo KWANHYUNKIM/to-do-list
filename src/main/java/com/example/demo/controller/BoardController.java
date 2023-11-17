@@ -64,9 +64,9 @@ public class BoardController {
         return "boards/boardList";
     }
 
-    /*
+    /**
      * 게시판 삭제
-     */
+     **/
     @GetMapping("/boards/delete/{boardId}")
     public String deleteBoard(@PathVariable("boardId") Long boardId){
         System.out.println("BOARDID = " + boardId);
@@ -75,9 +75,9 @@ public class BoardController {
         return "boards/boardList";
     }
 
-    /*
+    /**
      * 세부 게시판
-     */
+     **/
     @GetMapping("/boards/{boardId}")
     public String viewBoardDetails(@PathVariable("boardId") Long boardId, Model model) {
         Board board = boardService.findBoardByDetail(boardId);
@@ -93,9 +93,9 @@ public class BoardController {
         model.addAttribute("board", board);
         return "boards/details";
     }
-    /*
+    /**
      * 정렬
-     */
+     **/
     @GetMapping("/boards")
     public String getBoards(Model model, @RequestParam(name = "sort", defaultValue = "createdDate") String sort) {
         List<Board> boards = boardService.getAllBoardsSortedBy(sort);
@@ -103,6 +103,26 @@ public class BoardController {
         model.addAttribute("currentSort", sort);
         return "boards/boardList";
     }
+
+    /**
+     *  수정 폼 ( 게시글 수정 )
+     */
+    @GetMapping ("/boards/edit/{boardId}")
+    public String showEditForm(@PathVariable("boardId") Long boardId, Model model) {
+        Board board = boardService.findBoardByDetail(boardId);
+        model.addAttribute("board", board);
+        return "boards/editForm"; // 수정 폼의 Thymeleaf 템플릿 이름
+    }
+
+    /**
+     * 수정 요청 처리 ( 게시글 수정 )
+     */
+    @PostMapping("/boards/edit/{boardId}")
+    public String handleEditForm(@PathVariable("boardId") Long boardId, @ModelAttribute Board updatedBoard) {
+        boardService.updateBoard(boardId, updatedBoard);
+        return "redirect:/boards/boardList/";
+    }
+
 
 }
 

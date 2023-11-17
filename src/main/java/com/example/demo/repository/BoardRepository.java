@@ -50,6 +50,7 @@ public class BoardRepository {
         return em.find(Board.class, id);
     }
 
+    // 조히수 증가
     public void incrementViewCount(Long boardId) {
         Board board = findOne(boardId);
         if (board != null) {

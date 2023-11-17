@@ -50,9 +50,6 @@ public class BoardService {
     public Board findBoardByDetail(Long id) {return boardRepository.findOne(id);}
 
     public List<Board> findByAll (String title) {return boardRepository.findByAll(title);}
-    /**
-     * 게시글 수정
-     */
 
     /**
      * 게시글 삭제
@@ -77,6 +74,22 @@ public class BoardService {
         // 다른 정렬 기준이 필요한 경우에도 추가 가능
 
         return boardRepository.findAll(); // 정렬 기준이 없는 경우 기본적으로 전체 목록 반환
+    }
+
+    /**
+     * 게시글 수정
+     */
+
+    @Transactional
+    public void updateBoard(Long boardId, Board updatedBoard) {
+        Board existingBoard = findBoardByDetail(boardId);
+
+        if (existingBoard != null) {
+            existingBoard.setTitle(updatedBoard.getTitle());
+            existingBoard.setContent(updatedBoard.getContent());
+            // 필요에 따라 다른 필드도 업데이트
+            boardRepository.save(existingBoard);
+        }
     }
 
     @Transactional
