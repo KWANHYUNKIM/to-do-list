@@ -1,7 +1,9 @@
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,9 +19,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPasswordEncoder() {return new BCryptPasswordEncoder();}
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().disable()
-                .csrf().disable()
-                .formLogin().disable()
-                .headers().frameOptions().disable();
+        http
+                .authorizeRequests()
+                .antMatchers("/", "/home").permitAll()
+                .anyRequest().hasRole("USER") // 모든 요청은 "USER" 권한이 있어야 함
+                .and()
+                .formLogin()
+                .loginPage("/members/login")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+
     }
 }
