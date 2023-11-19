@@ -22,11 +22,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/home").permitAll()
-                .anyRequest().hasRole("USER") // 모든 요청은 "USER" 권한이 있어야 함
+                .anyRequest().permitAll()//hasAnyAuthority("ROLE_CLIENT") // 모든 요청은 "client" 권한이 있어야 함
                 .and()
                 .formLogin()
                 .loginPage("/members/login")
                 .permitAll()
+                .defaultSuccessUrl("/",true) // 로그인 성공 시 라다렉트할 페이지
                 .and()
                 .logout()
                 .permitAll();

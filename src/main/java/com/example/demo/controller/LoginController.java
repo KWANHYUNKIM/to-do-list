@@ -5,6 +5,7 @@ import com.example.demo.manager.SessionManager;
 import com.example.demo.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,12 +18,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
     private final LoginService loginService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/members/login")
     public String loginForm(@ModelAttribute("LoginForm") LoginForm form){
@@ -31,9 +34,15 @@ public class LoginController {
 
     @PostMapping("/members/login")
     public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletRequest request, Model model){
-        Member loginMember = loginService.login(form.getEmail(), form.getPassword());
+        String encodedPassword = passwordEncoder.encode(form.getPassword());
+        System.out.println("encodedPassword " + " " + encodedPassword);
+        Member loginMember = loginService.login(form.getEmail(), encodedPassword);
+        String databaseEncodedPassword = loginMember.getPassword();
+        System.out.println("databaseEncodedPassword" + " " + databaseEncodedPassword);
 
-        if (loginMember != null) {
+        if (passwordEncoder.matches(form.getPassword(), databaseEncodedPassword)) {
+
+
             // 로그인 성공
             HttpSession session = request.getSession();
             session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
