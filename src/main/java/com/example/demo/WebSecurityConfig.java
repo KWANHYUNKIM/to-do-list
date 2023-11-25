@@ -21,5 +21,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .formLogin().disable()
                 .headers().frameOptions().disable();
+        http
+                .authorizeRequests()
+                .antMatchers("/images/**").permitAll();// "/static/files" 및 그 내용에 대한 액세스 허용
     }
 }

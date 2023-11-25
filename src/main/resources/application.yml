@@ -6,7 +6,6 @@ spring:
     driver-class-name: org.h2.Driver
   jackson:
     date-format: yyyy-MM-dd HH:mm
-
   jpa:
     hibernate:
       ddl-auto: create
@@ -14,8 +13,17 @@ spring:
       hibernate:
         #        show_sql: true
         format_sql: true
+  spring:
+    resources:
+      static-locations: classpath:/static/
+
+#reload
+    devtools:
+      restart:
+        enabled: true
+      livereload:
+        enabled: true # LiveReload 브라우저 확장프로그램 설치시 적용
 
 logging.level:
   org.hibernate.SQL: debug
-
 #  org.hibernate.type: trace

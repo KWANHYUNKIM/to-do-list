@@ -39,7 +39,7 @@ public class BoardController {
             return "boards/createBoardForm";
         }
         // 파일 저장
-        String projectPath = System.getProperty("user.dir") + "//src//main//resources//static//files";
+        String projectPath = System.getProperty("user.dir") + "//src//main//resources//static//images";
 
         /*식별자 . 랜덤으로 이름 만들어줌*/
         UUID uuid = UUID.randomUUID();
@@ -62,7 +62,7 @@ public class BoardController {
         board.setDeleteYn('y');
         board.setMember(member);
         board.setFilename(fileName);
-        board.setFilepath("/files/" + fileName);
+        board.setFilepath("/images/" + fileName);
 
         boardService.join(board);
 

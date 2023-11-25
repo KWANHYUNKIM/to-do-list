@@ -1,6 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.domain.Board;
 import com.example.demo.domain.Member;
+import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,17 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class initDb {
 
     private final InitService initService;
-
+    private final InitBoard initBoard;
     @PostConstruct
     public void init(){
         initService.dbInit1();
         initService.dbInit2();
+        initBoard.dbInit1();
     }
 
     @Component
@@ -52,6 +56,36 @@ public class initDb {
             member.setPhonenumber(phonenumber);
             member.setPosition(position);
             return member;
+        }
+    }
+
+    @Component
+    @Transactional
+    @RequiredArgsConstructor
+    static class InitBoard {
+
+        private final EntityManager em;
+        private final MemberRepository memberRepository;
+        public void dbInit1() {
+            System.out.println("Init1" + this.getClass());
+
+            Optional<Member> optionalMember = Optional.ofNullable(memberRepository.findByEmail("molba06@naver.com"));
+
+            // 결과가 존재할 경우에만 Member 객체를 가져와서 사용
+            optionalMember.ifPresent(member -> {
+                Board board = createBoard("하이루", "안녕하세요 이번에 입사한 최해영입니다", "57c87c27-5361-413d-9fae-1c5e62019c60_00.jpg", "/images/57c87c27-5361-413d-9fae-1c5e62019c60_00.jpg", member);
+                em.persist(board);
+            });
+        }
+
+        private Board createBoard(String content, String title, String filename, String filepath,Member member) {
+            Board board = new Board();
+            board.setContent(content);
+            board.setTitle(title);
+            board.setFilename(filename);
+            board.setFilepath(filepath);
+            board.setMember(member);
+            return board;
         }
     }
 }
