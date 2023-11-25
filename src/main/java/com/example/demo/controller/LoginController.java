@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Member;
-import com.example.demo.manager.SessionManager;
 import com.example.demo.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.regex.Pattern;
 
 @Slf4j
 @Controller
@@ -33,7 +29,7 @@ public class LoginController {
     }
 
     @PostMapping("/members/login")
-    public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletRequest request, Model model){
+    public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, Model model){
         String encodedPassword = passwordEncoder.encode(form.getPassword());
         System.out.println("encodedPassword " + " " + encodedPassword);
         Member loginMember = loginService.login(form.getEmail(), encodedPassword);
@@ -41,11 +37,8 @@ public class LoginController {
         System.out.println("databaseEncodedPassword" + " " + databaseEncodedPassword);
 
         if (passwordEncoder.matches(form.getPassword(), databaseEncodedPassword)) {
-
-
             // 로그인 성공
-            HttpSession session = request.getSession();
-            session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+            // 세션이 들어갈수있음.
 
             return "redirect:/";
         } else {

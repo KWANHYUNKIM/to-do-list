@@ -21,8 +21,10 @@ public class LoginService {
      */
     public Member login(String email, String password) {
         String encodedPassword = passwordEncoder.encode(password);
+        String dbPassword = loginRepository.findByEmail(email).get().getPassword();
+
         return loginRepository.findByEmail(email)
-                .filter(m -> passwordEncoder.matches(password,encodedPassword))
+                .filter(m -> passwordEncoder.matches(encodedPassword,dbPassword))
                 .orElse(null);
         }
 }
