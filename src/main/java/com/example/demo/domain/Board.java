@@ -6,9 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import com.example.demo.domain.Member;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -28,6 +26,10 @@ public class Board {
 
     @Lob // 대용량 데이터
     private String content;
+
+    private String filename; // 파일 이름
+
+    private String filepath; // 파일 경로
 
     @ManyToOne(fetch = FetchType.LAZY) // Many : Board , One : Member 한명의 유저가 여러개의 게시글 작성
     @JoinColumn(name = "member_id")

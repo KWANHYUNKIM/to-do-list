@@ -1,6 +1,7 @@
-package com.example.demo.controller;
+package com.example.demo.controller.form;
 
 
+import com.example.demo.controller.Password;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +20,8 @@ public class MemberForm {
     @NotEmpty(message = "ex) 950326.")
     private String birthday;
 
-    @Password @NotEmpty
+    @Password
+    @NotEmpty
     private String password;
     @NotEmpty(message = "ex) 010-1234-5678.")
     private String phonenumber;

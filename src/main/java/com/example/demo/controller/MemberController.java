@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.controller.form.MemberForm;
 import com.example.demo.domain.Member;
 import com.example.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;

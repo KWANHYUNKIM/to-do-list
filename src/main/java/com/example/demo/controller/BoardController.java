@@ -1,21 +1,24 @@
 package com.example.demo.controller;
 
+import com.example.demo.controller.form.BoardForm;
 import com.example.demo.domain.Board;
 import com.example.demo.domain.Member;
 import com.example.demo.service.BoardService;
 import com.example.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Parameter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Controller
@@ -31,11 +34,26 @@ public class BoardController {
     }
 
     @PostMapping("/members/board")
-    public String create(HttpSession session, @Valid BoardForm form, BindingResult result) {
-
+    public String create(HttpSession session, @Valid BoardForm form, MultipartFile file, BindingResult result) throws IOException {
         if(result.hasErrors()) {
             return "boards/createBoardForm";
         }
+        // 파일 저장
+        String projectPath = System.getProperty("user.dir") + "//src//main//resources//static//files";
+
+        /*식별자 . 랜덤으로 이름 만들어줌*/
+        UUID uuid = UUID.randomUUID();
+
+        /*랜덤식별자_원래파일이름 = 저장될 파일이름 지정*/
+        String fileName = uuid + "_" + file.getOriginalFilename();
+
+        /*빈 껍데기 생성*/
+        /*File을 생성할건데, 이름은 "name" 으로할거고, projectPath 라는 경로에 담긴다는 뜻*/
+        File saveFile = new File(projectPath, fileName);
+
+        file.transferTo(saveFile);
+
+        System.out.println("FileName =" + fileName);
         Member member = (Member) session.getAttribute("loginMember");
         System.out.println("Member from session: " + member);
         Board board = new Board();
@@ -43,6 +61,9 @@ public class BoardController {
         board.setContent(form.getContents());
         board.setDeleteYn('y');
         board.setMember(member);
+        board.setFilename(fileName);
+        board.setFilepath("/files/" + fileName);
+
         boardService.join(board);
 
         return "redirect:/";
