@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+
+<div class="container">
+  <div th:replace="fragments/bodyHeader :: bodyHeader" />
+  <div>
+    <!-- 검색 -->
+    <form th:action="@{/boards/search}" method="GET">
+      <label for="query">Search:</label>
+      <input type="text" id="query" name="query">
+      <button type="submit">Search</button>
+    </form>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>조회수</th>
+        <th>좋아요</th>
+        <th>작성날짜</th>
+        <th>수정</th>
+        <th>삭제</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="board : ${boards}">
+        <td>
+          <a th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.title}"></a>
+        </td>
+        <td th:text="${board.member.username}"></td>
+        <td th:text="${board.viewCount}"></td>
+        <td th:text="${board.likes}"></td>
+        <td th:text="${board.createdDate.year} + '-' + ${board.createdDate.monthValue} + '-' + ${board.createdDate.dayOfMonth}"></td>
+
+        <!-- 수정 버튼 -->
+        <td>
+          <a th:if="${session.loginMember.username != null and session.loginMember.id == board.member.id}"
+             th:href="@{/boards/edit/{boardId}(boardId=${board.id})}" class="btn btn-primary">수정</a>
+        </td>
+        <!-- 삭제 버튼 -->
+        <td>
+          <a th:if="${session.loginMember.username != null and session.loginMember.id == board.member.id}"
+             th:href="@{/boards/delete/{boardId}(boardId=${board.id})}" class="btn btn-danger">삭제</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div th:replace="fragments/footer :: footer" />
+
+</div> <!-- /container -->
+
+</body>
+</html>
