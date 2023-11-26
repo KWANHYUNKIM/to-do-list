@@ -1,7 +1,6 @@
 package com.example.demo.repository;
 
 import com.example.demo.domain.Board;
-import com.example.demo.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -27,9 +26,11 @@ public class BoardRepository {
                 .getResultList();
     }
 
-    public List<Board> findByAll(String title) {
+    // Search 를 통해서 Title 검색
+
+    public List<Board> findByQuery(String title) {
         return findAll().stream()
-                .filter(m -> m.getTitle().equals(title))
+                .filter(m -> m.getTitle().contains(title))
                 .collect(Collectors.toList());
     }
 

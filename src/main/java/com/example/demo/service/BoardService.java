@@ -1,11 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Board;
-import com.example.demo.domain.Member;
 import com.example.demo.repository.BoardRepository;
-import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,13 +40,15 @@ public class BoardService {
     /**
      * 게시글 리스트 조회
      */
+
+    // 초기 화면 조회 :
     public List<Board> findBoard() {
         return boardRepository.findAll();
     }
 
     public Board findBoardByDetail(Long id) {return boardRepository.findOne(id);}
-
-    public List<Board> findByAll (String title) {return boardRepository.findByAll(title);}
+    // 검색 했을 경우 :
+    public List<Board> findByQuery(String title) {return boardRepository.findByQuery(title);}
 
     /**
      * 게시글 삭제

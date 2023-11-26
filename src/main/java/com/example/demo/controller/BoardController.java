@@ -4,7 +4,6 @@ import com.example.demo.controller.form.BoardForm;
 import com.example.demo.domain.Board;
 import com.example.demo.domain.Member;
 import com.example.demo.service.BoardService;
-import com.example.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -26,7 +25,6 @@ import java.util.UUID;
 public class BoardController {
 
     private final BoardService boardService;
-    private final MemberService memberService;
 
     @GetMapping("/members/board")
     public String boardForm(@ModelAttribute("boardForm") BoardForm form) {
@@ -66,7 +64,7 @@ public class BoardController {
 
         boardService.join(board);
 
-        return "redirect:/";
+        return "redirect:";
     }
 
     @GetMapping("/members/all")
@@ -76,11 +74,10 @@ public class BoardController {
         return "boards/boardList";
     }
 
-
     @GetMapping("/boards/search")
     public String find(@RequestParam("query") String query, Model model){
 
-        List<Board> boards = boardService.findByAll(query);
+        List<Board> boards = boardService.findByQuery(query);
         model.addAttribute("boards",boards);
         return "boards/boardList";
     }
@@ -90,10 +87,8 @@ public class BoardController {
      **/
     @GetMapping("/boards/delete/{boardId}")
     public String deleteBoard(@PathVariable("boardId") Long boardId){
-        System.out.println("BOARDID = " + boardId);
         boardService.deleteBoard(boardId);
-
-        return "boards/boardList";
+        return "fragments/boardTable";
     }
 
     /**
@@ -122,7 +117,7 @@ public class BoardController {
         List<Board> boards = boardService.getAllBoardsSortedBy(sort);
         model.addAttribute("boards", boards);
         model.addAttribute("currentSort", sort);
-        return "boards/boardList";
+        return "fragments/boardTable";
     }
 
     /**
@@ -143,7 +138,5 @@ public class BoardController {
         boardService.updateBoard(boardId, updatedBoard);
         return "redirect:/boards/boardList/";
     }
-
-
 }
 

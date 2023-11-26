@@ -21,8 +21,10 @@
         <th>조회수</th>
         <th>좋아요</th>
         <th>작성날짜</th>
-        <th>수정</th>
-        <th>삭제</th>
+
+        <th th:if="${session.loginMember != null and session.loginMember.username != null}">수정</th>
+        <th th:if="${session.loginMember != null and session.loginMember.username != null}">삭제</th>
+
       </tr>
       </thead>
       <tbody>
@@ -37,12 +39,12 @@
 
         <!-- 수정 버튼 -->
         <td>
-          <a th:if="${session.loginMember.username != null and session.loginMember.id == board.member.id}"
+          <a th:if="${session.loginMember != null and session.loginMember.username != null and session.loginMember.id == board.member.id}"
              th:href="@{/boards/edit/{boardId}(boardId=${board.id})}" class="btn btn-primary">수정</a>
         </td>
-        <!-- 삭제 버튼 -->
+
         <td>
-          <a th:if="${session.loginMember.username != null and session.loginMember.id == board.member.id}"
+          <a th:if="${session.loginMember != null and session.loginMember.username != null and session.loginMember.id == board.member.id}"
              th:href="@{/boards/delete/{boardId}(boardId=${board.id})}" class="btn btn-danger">삭제</a>
         </td>
       </tr>
@@ -53,6 +55,3 @@
   <div th:replace="fragments/footer :: footer" />
 
 </div> <!-- /container -->
-
-</body>
-</html>
