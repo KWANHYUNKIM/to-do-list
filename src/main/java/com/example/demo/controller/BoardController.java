@@ -88,7 +88,7 @@ public class BoardController {
     @GetMapping("/boards/delete/{boardId}")
     public String deleteBoard(@PathVariable("boardId") Long boardId){
         boardService.deleteBoard(boardId);
-        return "fragments/boardTable";
+        return "boards/boardList";
     }
 
     /**

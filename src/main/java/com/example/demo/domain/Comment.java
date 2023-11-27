@@ -11,8 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "comments")
 public class Comment {
@@ -24,6 +23,10 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY) // Many : Board , One : Member 한명의 유저가 여러개의 게시글 작성
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "board_id")
+    private Board board;
 
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")

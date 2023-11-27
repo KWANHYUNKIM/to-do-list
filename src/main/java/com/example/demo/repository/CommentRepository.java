@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -29,6 +30,9 @@ public class CommentRepository {
     private Comment findOne(Long commentId) {
         return em.find(Comment.class, commentId);
     }
+
+    // 조회
+
 
     //수정
     //to-do
