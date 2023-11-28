@@ -32,15 +32,17 @@ public class CommentController {
 
     private final CommentService commentService;
     private final BoardService boardService;
+
+    // GET : 댓글을 보여주는 역할을 한다.
     @GetMapping("/boards/{boardId}/comment")
-    public String showForm(@PathVariable Long boardId, @ModelAttribute("commentForm") CommentForm form, Model model) {
+    public String commentForm(@PathVariable Long boardId, @ModelAttribute("commentForm") CommentForm form, Model model) {
         List<Comment> comments = commentService.findByBoardId(boardId);
-        model.addAttribute("comments", comments);
+        model.addAttribute("comments", comments);  // 빈 CommentForm을 모델에 추가
         return "redirect:/boards/" + boardId;
     }
-
+    // POST : 댓글을 다는 역할을 한다.
     @PostMapping("/boards/{boardId}/comment")
-    public String createForm(@PathVariable Long boardId, HttpSession session, @Valid CommentForm form) throws IOException {
+    public String createForm(@PathVariable Long boardId, @Valid @ModelAttribute CommentForm form, HttpSession session) {
         Comment comment = new Comment();
         Member member = (Member) session.getAttribute("loginMember");
         Board board = boardService.findBoardByDetail(boardId);  // 해당 boardId에 대한 게시물을 가져옴

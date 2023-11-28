@@ -18,6 +18,7 @@ public class Comment {
 
     @Id
     @GeneratedValue
+    @Column(name ="comment_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY) // Many : Board , One : Member 한명의 유저가 여러개의 게시글 작성

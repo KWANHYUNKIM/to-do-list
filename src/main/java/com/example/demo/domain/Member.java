@@ -27,4 +27,7 @@ public class Member {
     private String phonenumber; // 핸드폰번호
 
     private String position; // Manager, Owner, Client
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
 }

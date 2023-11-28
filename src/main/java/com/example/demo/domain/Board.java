@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
     @Entity
@@ -41,8 +42,6 @@ public class Board {
     @ColumnDefault("0")
     private int likes;
 
-    private char deleteYn; // 삭제 여부
-
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdDate;
@@ -50,7 +49,11 @@ public class Board {
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 
-    //==연관관계 메서드==//
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("id asc")
+    private List<Comment> comments;
+
+    //==연관 관계 메서드==//
     public void setMember (Member member) {
         this.member = member;
     }

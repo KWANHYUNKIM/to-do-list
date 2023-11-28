@@ -57,7 +57,6 @@ public class BoardController {
         Board board = new Board();
         board.setTitle(form.getTitle());
         board.setContent(form.getContents());
-        board.setDeleteYn('y');
         board.setMember(member);
         board.setFilename(fileName);
         board.setFilepath("/images/" + fileName);
@@ -90,7 +89,6 @@ public class BoardController {
         boardService.deleteBoard(boardId);
         return "boards/boardList";
     }
-
     /**
      * 세부 게시판
      **/

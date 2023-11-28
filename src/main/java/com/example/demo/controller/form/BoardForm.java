@@ -13,6 +13,4 @@ public class BoardForm {
     private String title;
     @NotEmpty
     private String contents;
-
-    private char deleteYn;
 }

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Board;
+import com.example.demo.domain.Comment;
 import com.example.demo.domain.Member;
 import com.example.demo.repository.LoginRepository;
 import com.example.demo.repository.MemberRepository;
@@ -9,16 +10,17 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class BoardServiceTest {
+public class CommentServiceTest {
+
 
     @Autowired CommentService commentService;
     @Autowired BoardService boardService;
@@ -28,9 +30,14 @@ public class BoardServiceTest {
     @Autowired MemberService memberService;
     @Autowired LoginRepository loginRepository;
 
+    /**
+     * 댓글 달기
+     */
     @Test
     //@Rollback(false) // 롤백하지 않도록 설정
-    public void 게시판생성() throws Exception {
+    public void 댓글달기() throws Exception {
+
+        // 회원가입
         String password = "ehsqjfwk123!";
         String encodePassword = passwordEncoder.encode(password);
 
@@ -49,5 +56,13 @@ public class BoardServiceTest {
         board.setContent("하이루");
 
         em.persist(board);
+
+        Comment comment = new Comment();
+        comment.setComment("와우 이게 뭔가요?");
+        comment.setMember(member);
+        comment.setBoard(board);
+        em.persist(comment);
     }
 }
+
+
