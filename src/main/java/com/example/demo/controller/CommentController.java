@@ -34,14 +34,23 @@ public class CommentController {
     private final BoardService boardService;
 
     // GET : 댓글을 보여주는 역할을 한다.
-    @GetMapping("/boards/{boardId}/comment")
+    @GetMapping("/boards/{boardId}/detail")
     public String commentForm(@PathVariable Long boardId, @ModelAttribute("commentForm") CommentForm form, Model model) {
-        model.addAttribute("comments", commentService.findByBoardId(boardId));
+
+        List<Comment> comments = commentService.findByBoardId(boardId);
+        Board boards = boardService.findBoardByDetail(boardId);
+
+        // 조회수 증가 로직 추가
+        boardService.incrementViewCount(boardId);
+
+        model.addAttribute("board",boards);
+        model.addAttribute("commentForm", new CommentForm());
+        model.addAttribute("comments", comments); // <!-- 게시물에 대한 댓글 목록 표시 -->
 
         return "boards/details";
     }
     // POST : 댓글을 다는 역할을 한다.
-    @PostMapping("/boards/{boardId}/comment")
+    @PostMapping("/boards/{boardId}/detail")
     public String createForm(@PathVariable Long boardId, @Valid @ModelAttribute CommentForm form, HttpSession session) {
         Comment comment = new Comment();
         Member member = (Member) session.getAttribute("loginMember");
@@ -54,6 +63,6 @@ public class CommentController {
         commentService.join(comment);
 
         // 댓글이 속한 게시물의 세부 페이지로 리다이렉트합니다.
-        return "redirect:/boards/" + boardId;
+        return "redirect:/boards/" + boardId +"/detail";
     }
 }

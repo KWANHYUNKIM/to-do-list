@@ -30,7 +30,7 @@ public class BoardController {
     public String boardForm(@ModelAttribute("boardForm") BoardForm form) {
         return "boards/createBoardForm";
     }
-
+    
     @PostMapping("/members/board")
     public String create(HttpSession session, @Valid BoardForm form, MultipartFile file, BindingResult result) throws IOException {
         if(result.hasErrors()) {
@@ -63,7 +63,7 @@ public class BoardController {
 
         boardService.join(board);
 
-        return "redirect:";
+        return "redirect:/";
     }
 
     @GetMapping("/members/all")
@@ -84,28 +84,10 @@ public class BoardController {
     /**
      * 게시판 삭제
      **/
-    @GetMapping("/boards/delete/{boardId}")
+    @GetMapping("/boards/delete/{boardId}") // @GetMapping : 이 url 에서 반응 해서 boards/boardsList 넣어 준다.
     public String deleteBoard(@PathVariable("boardId") Long boardId){
         boardService.deleteBoard(boardId);
         return "boards/boardList";
-    }
-    /**
-     * 세부 게시판
-     **/
-    @GetMapping("/boards/{boardId}")
-    public String viewBoardDetails(@PathVariable("boardId") Long boardId, Model model) {
-        Board board = boardService.findBoardByDetail(boardId);
-
-        if (board == null) {
-            // 게시판이 존재하지 않을 경우 예외 처리 또는 적절한 처리를 수행
-            return "error";
-        }
-
-        // 조회수 증가 로직 추가
-        boardService.incrementViewCount(boardId);
-
-        model.addAttribute("board", board);
-        return "boards/details";
     }
     /**
      * 정렬
@@ -115,13 +97,13 @@ public class BoardController {
         List<Board> boards = boardService.getAllBoardsSortedBy(sort);
         model.addAttribute("boards", boards);
         model.addAttribute("currentSort", sort);
-        return "fragments/boardTable";
+        return "boards/boardList";
     }
 
     /**
      *  수정 폼 ( 게시글 수정 )
      */
-    @GetMapping ("/boards/edit/{boardId}")
+    @GetMapping("/boards/edit/{boardId}")
     public String showEditForm(@PathVariable("boardId") Long boardId, Model model) {
         Board board = boardService.findBoardByDetail(boardId);
         model.addAttribute("board", board);
@@ -129,12 +111,21 @@ public class BoardController {
     }
 
     /**
-     * 수정 요청 처리 ( 게시글 수정 )
+     *
+     * @param boardId
+     * @param updatedBoard
+     * @return
      */
+
     @PostMapping("/boards/edit/{boardId}")
     public String handleEditForm(@PathVariable("boardId") Long boardId, @ModelAttribute Board updatedBoard) {
         boardService.updateBoard(boardId, updatedBoard);
+        System.out.println("boardId" + boardId);
+        System.out.println("updatedBoardTitle" + updatedBoard.getTitle());
+        System.out.println("updatedBoardTitle" + updatedBoard.getContent());
+
         return "redirect:/boards/boardList/";
     }
+
 }
 

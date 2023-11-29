@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.domain.Board;
+import com.example.demo.domain.Comment;
 import com.example.demo.domain.Member;
 import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -67,6 +68,7 @@ public class initDb {
 
         private final EntityManager em;
         private final MemberRepository memberRepository;
+
         public void dbInit1() {
             System.out.println("Init1" + this.getClass());
 
@@ -76,10 +78,13 @@ public class initDb {
             optionalMember.ifPresent(member -> {
                 Board board = createBoard("하이루", "안녕하세요 이번에 입사한 최해영입니다", "57c87c27-5361-413d-9fae-1c5e62019c60_00.jpg", "/images/57c87c27-5361-413d-9fae-1c5e62019c60_00.jpg", member);
                 em.persist(board);
+
+                Comment comment = createComment("안녕하세요! 반가워요", board, member);
+                em.persist(comment);
             });
         }
 
-        private Board createBoard(String content, String title, String filename, String filepath,Member member) {
+        private Board createBoard(String content, String title, String filename, String filepath, Member member) {
             Board board = new Board();
             board.setContent(content);
             board.setTitle(title);
@@ -87,6 +92,14 @@ public class initDb {
             board.setFilepath(filepath);
             board.setMember(member);
             return board;
+        }
+
+        private Comment createComment(String commentContent, Board board, Member member) {
+            Comment comment = new Comment();
+            comment.setComment(commentContent);
+            comment.setBoard(board);
+            comment.setMember(member);
+            return comment;
         }
     }
 }

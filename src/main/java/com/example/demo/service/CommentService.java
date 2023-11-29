@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,10 +28,8 @@ public class CommentService {
         return comment.getId();
     }
     public List<Comment> findByBoardId(Long boardId) {
-        String jpql = "SELECT c FROM Comment c WHERE c.board.id = :boardId";
-        return em.createQuery(jpql, Comment.class)
-                .setParameter("boardId", boardId)
-                .getResultList();
+
+        return commentRepository.findByComment(boardId);
     }
 
 }

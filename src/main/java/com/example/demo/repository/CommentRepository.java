@@ -7,13 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class CommentRepository {
     private final EntityManager em;
-
-
     //저장
 
     public void save(Comment comment) {
@@ -33,6 +32,11 @@ public class CommentRepository {
 
     // 조회
 
+    public List<Comment> findByComment(Long boardId) {
+        return em.createQuery("SELECT c  FROM Comment c WHERE c.board.id = :boardId", Comment.class)
+                .setParameter("boardId", boardId)
+                .getResultList();
+    }
 
     //수정
     //to-do
