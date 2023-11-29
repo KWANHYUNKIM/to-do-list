@@ -9,8 +9,8 @@
 <img th:src="@{${board.filepath}}" width="100" height="200" />
 
 <!-- 댓글 입력 폼 -->
-<form role="form" action="/boards/{boardId}/comment" th:object="${commentForm}" method="post">
-  <textarea th:field="*{comments}" rows="4" cols="50"></textarea>
+<form role="form" th:action="@{'/boards/' + ${boardId} + '/comment'}" th:object="${commentForm}" method="post">
+  <!-- <input type="text" th:field="*{comment}" class="form-control" placeholder="후기를 남겨주세요."> -->
   <br>
   <button type="submit">Submit Comment</button>
 </form>

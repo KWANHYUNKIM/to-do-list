@@ -26,7 +26,6 @@ public class CommentService {
         commentRepository.save(comment);
         return comment.getId();
     }
-    @Transactional
     public List<Comment> findByBoardId(Long boardId) {
         String jpql = "SELECT c FROM Comment c WHERE c.board.id = :boardId";
         return em.createQuery(jpql, Comment.class)

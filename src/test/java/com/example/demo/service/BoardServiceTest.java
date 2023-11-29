@@ -30,7 +30,7 @@ public class BoardServiceTest {
 
     @Test
     //@Rollback(false) // 롤백하지 않도록 설정
-    public void 게시판생성() throws Exception {
+    public void 게시판_생성() throws Exception {
         String password = "ehsqjfwk123!";
         String encodePassword = passwordEncoder.encode(password);
 

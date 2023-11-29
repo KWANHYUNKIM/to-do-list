@@ -24,6 +24,7 @@ public class initDb {
         initService.dbInit1();
         initService.dbInit2();
         initBoard.dbInit1();
+
     }
 
     @Component

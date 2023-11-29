@@ -36,9 +36,9 @@ public class CommentController {
     // GET : 댓글을 보여주는 역할을 한다.
     @GetMapping("/boards/{boardId}/comment")
     public String commentForm(@PathVariable Long boardId, @ModelAttribute("commentForm") CommentForm form, Model model) {
-        List<Comment> comments = commentService.findByBoardId(boardId);
-        model.addAttribute("comments", comments);  // 빈 CommentForm을 모델에 추가
-        return "redirect:/boards/" + boardId;
+        model.addAttribute("comments", commentService.findByBoardId(boardId));
+
+        return "boards/details";
     }
     // POST : 댓글을 다는 역할을 한다.
     @PostMapping("/boards/{boardId}/comment")

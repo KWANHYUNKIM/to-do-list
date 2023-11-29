@@ -35,7 +35,7 @@ public class CommentServiceTest {
      */
     @Test
     //@Rollback(false) // 롤백하지 않도록 설정
-    public void 댓글달기() throws Exception {
+    public void 댓글_달기() throws Exception {
 
         // 회원가입
         String password = "ehsqjfwk123!";
