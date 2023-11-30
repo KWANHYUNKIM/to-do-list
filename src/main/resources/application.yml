@@ -16,7 +16,6 @@ spring:
   spring:
     resources:
       static-locations: classpath:/static/
-
 #reload
     devtools:
       restart:

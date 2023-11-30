@@ -124,7 +124,7 @@ public class BoardController {
         System.out.println("updatedBoardTitle" + updatedBoard.getTitle());
         System.out.println("updatedBoardTitle" + updatedBoard.getContent());
 
-        return "redirect:/boards/boardList/";
+        return "redirect:/members/all";
     }
 
 }

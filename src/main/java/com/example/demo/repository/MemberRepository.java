@@ -17,7 +17,15 @@ public class MemberRepository {
     private final EntityManager em;
 
     public void save(Member member) {
+        validateDuplicateMember(member);
         em.persist(member);
+    }
+
+    private void validateDuplicateMember(Member member) {
+        Member findMember = findByEmail(member.getEmail());
+        if (findMember != null) {
+            throw new IllegalStateException("이미 가입된 회원입니다.");
+        }
     }
 
     public Member findOne(Long id) {

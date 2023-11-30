@@ -19,9 +19,10 @@ public class LoginRepository {
                 .getResultList();
     }
 
-    public Optional<Member> findByEmail(String email) {
+    public Member findByEmail(String email) {
         return findAll().stream()
                 .filter(m -> m.getEmail().equals(email))
-                .findFirst();
+                .findFirst()
+                .orElse(null);
     }
 }

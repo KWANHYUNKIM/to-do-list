@@ -17,13 +17,15 @@ public class LoginService {
     private final LoginRepository loginRepository;
     private final PasswordEncoder passwordEncoder;
     /**
+     * @return Member 로그인 성공
      * @return null 로그인 실패
      */
     public Member login(String email, String password) {
-        String encodedPassword = passwordEncoder.encode(password);
-        return loginRepository.findByEmail(email)
-                .filter(m -> passwordEncoder.matches(password,encodedPassword))
-                .orElse(null);
+        Member member = loginRepository.findByEmail(email);
+        if(passwordEncoder.matches(password,member.getPassword())){
+            return member ; // 입력한 비밀번호와 저장소의 비밀번호가 일치
         }
+        return null;
+    }
 }
 

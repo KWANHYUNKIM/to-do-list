@@ -59,11 +59,11 @@ public class LoginServiceTest {
     @Test
     public void 로그인() throws Exception {
         String email = "molba06@naver.com";
-        String password = "ehsqjfwk123!";
+        String password = "1234";
 
         // 주입된 passwordEncoder를 사용하여 비밀번호를 인코딩
         String encodedPassword = passwordEncoder.encode(password);
-        String dbPassword = loginRepository.findByEmail(email).get().getPassword();
+        String dbPassword = loginRepository.findByEmail(email).getPassword();
 
         // findByEmail 메서드의 반환 타입이 Optional<Member> 인 경우에만 filter 사용
         assertAll(
