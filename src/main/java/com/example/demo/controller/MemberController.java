@@ -22,13 +22,13 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;
 
 
-    @GetMapping("/members/new")
+    @GetMapping("/new")
     public String createForm(Model model) {
         model.addAttribute("memberForm", new MemberForm());
         return "members/createMemberForm";
     }
 
-    @PostMapping("/members/new")
+    @PostMapping("/new")
     public String create(@Valid MemberForm form, BindingResult result) {
 
 
@@ -44,11 +44,11 @@ public class MemberController {
         member.setBirthday(form.getBirthday());
         member.setPassword(encodedPassword);
         member.setPhonenumber(form.getPhonenumber());
-        member.setPosition("client");
+        member.setPosition("user");
         memberService.join(member);
         return "redirect:/";
     }
-    @GetMapping("/members")
+    @GetMapping("/admin/member/list")
     public String list(Model model) {
         List<Member> members = memberService.findMembers();
         model.addAttribute("members",members);

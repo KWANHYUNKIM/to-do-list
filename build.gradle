@@ -37,10 +37,6 @@ dependencies {
 	implementation 'javax.json:javax.json-api:1.1.2'
 	implementation 'org.glassfish:javax.json:1.1'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	// 회원가입 & 로그인 기능 by Security
-	implementation 'org.springframework.security:spring-security-oauth2-client:5.7.5'
-	compileOnly "org.springframework.boot:spring-boot-starter-security"
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'

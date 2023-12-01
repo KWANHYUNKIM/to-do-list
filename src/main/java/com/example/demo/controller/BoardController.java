@@ -6,6 +6,7 @@ import com.example.demo.domain.Member;
 import com.example.demo.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,17 +19,25 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
-
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class BoardController {
 
     private final BoardService boardService;
-
     @GetMapping("/members/board")
-    public String boardForm(@ModelAttribute("boardForm") BoardForm form) {
-        return "boards/createBoardForm";
+    public String boardForm(@ModelAttribute("boardForm") BoardForm form, Authentication authentication){
+        // 현재 로그인한 사용자의 권한을 확인
+        boolean hasUserRole = authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("user"));
+
+        if (hasUserRole) {
+            // 권한이 있으면 처리
+            return "boards/createBoardForm";
+        } else {
+            // 권한이 없으면 다른 페이지로 리다이렉트 또는 예외 처리
+            return "redirect:/access-denied";
+        }
     }
     
     @PostMapping("/members/board")
@@ -66,7 +75,7 @@ public class BoardController {
         return "redirect:/";
     }
 
-    @GetMapping("/members/all")
+    @GetMapping("/boards/all")
     public String list(Model model) {
         List<Board> boards = boardService.findBoard();
         model.addAttribute("boards",boards);
@@ -92,7 +101,7 @@ public class BoardController {
     /**
      * 정렬
      **/
-    @GetMapping("/boards")
+    @GetMapping("/boards/sort")
     public String getBoards(Model model, @RequestParam(name = "sort", defaultValue = "createdDate") String sort) {
         List<Board> boards = boardService.getAllBoardsSortedBy(sort);
         model.addAttribute("boards", boards);
@@ -120,10 +129,6 @@ public class BoardController {
     @PostMapping("/boards/edit/{boardId}")
     public String handleEditForm(@PathVariable("boardId") Long boardId, @ModelAttribute Board updatedBoard) {
         boardService.updateBoard(boardId, updatedBoard);
-        System.out.println("boardId" + boardId);
-        System.out.println("updatedBoardTitle" + updatedBoard.getTitle());
-        System.out.println("updatedBoardTitle" + updatedBoard.getContent());
-
         return "redirect:/members/all";
     }
 

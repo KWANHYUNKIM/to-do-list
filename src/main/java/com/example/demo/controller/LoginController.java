@@ -22,12 +22,12 @@ import javax.validation.Valid;
 public class LoginController {
     private final LoginService loginService;
 
-    @GetMapping("/members/login")
+    @GetMapping("/login")
     public String loginForm(@ModelAttribute("LoginForm") LoginForm form){
         return "login/createLoginForm";
     }
 
-    @PostMapping("/members/login")
+    @PostMapping("/login")
     public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletRequest request, Model model){
         Member loginMember = loginService.login(form.getEmail(), form.getPassword());
         System.out.println("loginMember" + loginMember);
@@ -46,7 +46,7 @@ public class LoginController {
             // Cookie idCookie = new Cookie("memberId", String.valueOf(loginMember.getId()));
             // response.addCookie(idCookie);
 
-            return "redirect:/";
+            return "login/home";
         } else {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             model.addAttribute("error","아이디 또는 비밀번호가 맞지 않습니다.");
@@ -54,7 +54,7 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/members/logout")
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
 

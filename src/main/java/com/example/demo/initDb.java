@@ -38,13 +38,13 @@ public class initDb {
 
         public void dbInit1() {
             System.out.println("Init1" + this.getClass());
-            Member member = createMember("molba06@naver.com", "김관현"," 950326","ehsqjfwk123!","010-6620-2454","client");
+            Member member = createMember("molba06@naver.com", "김관현"," 950326","1234","010-6620-2454","user");
             em.persist(member);
         }
 
         public void dbInit2() {
             System.out.println("Init2" + this.getClass());
-            Member member = createMember("manager@gmail.com", "김매니저","비공개","1234","비공개","manager");
+            Member member = createMember("manager@gmail.com", "김매니저","비공개","1234","비공개","admin");
             em.persist(member);
         }
 

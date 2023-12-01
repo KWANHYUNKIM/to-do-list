@@ -43,6 +43,6 @@ public class HomeController {
 
         //세션이 유지되면 로그인으로 이동
         model.addAttribute("username", loginMember.getUsername());
-        return "login/home";
+        return "/login/home";
     }
 }
