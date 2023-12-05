@@ -1,8 +1,7 @@
 package com.example.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -11,6 +10,8 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@Builder @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "members")
 public class Member  {
     @Id @GeneratedValue
@@ -27,8 +28,9 @@ public class Member  {
 
     private String phonenumber; // 핸드폰번호
 
-    private String position; // Manager, Owner, Client
+    private String position;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Comment> comments;
+
 }

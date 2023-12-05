@@ -1,29 +1,18 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header">
+<head th:replace="login/loginBodyHeader :: loginbodyheader">
   <title>Hello</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<div class="container">
-  <div th:replace="fragments/bodyHeader :: bodyHeader" />
-  <div class="jumbotron">
-    <h1>BOARD</h1>
 
-    <h4 th:text="|로그인: ${username}|">로그인 사용자 이름</h4>
+  <div class="container">
 
-    <p class="lead">회원 기능</p>
-    <p>
-      <a class="btn btn-lg btn-secondary" href="/logout">로그아웃</a>
-    </p>
-    <p class="lead">글쓰기 기능</p>
-    <p>
+    <!-- <h4 th:text="|로그인: ${username}|">로그인 사용자 이름</h4> -->
+
       <!-- To-do -->
-
-
-    </p>
-  </div>
+  </div> <!-- /container -->
   <div th:replace="fragments/footer :: footer" />
-</div> <!-- /container -->
+
 </body>
 </html>

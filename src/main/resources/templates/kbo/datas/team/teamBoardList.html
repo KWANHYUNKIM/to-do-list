@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+
+<div class="container-button">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>순위</th>
+            <th>팀명</th>
+            <th>경기</th>
+            <th>승</th>
+            <th>패</th>
+            <th>무</th>
+            <th>승률</th>
+            <th>게임차</th>
+            <th>연속</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="teams : ${teams}">
+
+            <td th:text="${teams.ranking}"></td>
+            <td th:text="${teams.teamName}"></td>
+            <td th:text="${teams.matches}"></td>
+            <td th:text="${teams.win}"></td>
+            <td th:text="${teams.defeat}"></td>
+            <td th:text="${teams.draw}"></td>
+            <td th:text="${teams.winningRate}"></td>
+            <td th:text="${teams.gamesBehind}"></td>
+            <td th:text="${teams.winningSteak}"></td>
+
+    </table>
+</div>
+</body>
+</html>

@@ -6,6 +6,7 @@ import com.example.demo.domain.Member;
 import com.example.demo.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,21 +26,23 @@ import java.util.UUID;
 public class BoardController {
 
     private final BoardService boardService;
+
+    @Secured("ROLE_USER")
     @GetMapping("/members/board")
     public String boardForm(@ModelAttribute("boardForm") BoardForm form, Authentication authentication){
         // 현재 로그인한 사용자의 권한을 확인
-        boolean hasUserRole = authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("user"));
+        //boolean hasUserRole = authentication.getAuthorities().stream()
+        //        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_USER"));
 
-        if (hasUserRole) {
+       // if (hasUserRole) {
             // 권한이 있으면 처리
             return "boards/createBoardForm";
-        } else {
+       // } else {
             // 권한이 없으면 다른 페이지로 리다이렉트 또는 예외 처리
-            return "redirect:/access-denied";
-        }
+            //return "redirect:/access-denied";
+        //}
     }
-    
+    @Secured("ROLE_USER")
     @PostMapping("/members/board")
     public String create(HttpSession session, @Valid BoardForm form, MultipartFile file, BindingResult result) throws IOException {
         if(result.hasErrors()) {

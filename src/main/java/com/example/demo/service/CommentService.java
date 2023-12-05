@@ -16,7 +16,6 @@ import java.util.Optional;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private EntityManager em;
 
     /**
      * 커맨드 생성

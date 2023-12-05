@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Team Crawl Data</title>
+</head>
+<body>
+
+<table border="1">
+  <tr>
+    <th>순위</th>
+    <th>팀명</th>
+    <th>경기</th>
+    <th>승</th>
+    <th>패</th>
+    <th>무</th>
+    <th>승률</th>
+    <th>게임차</th>
+    <th>최근10경기</th>
+    <th>연속</th>
+    <th>홈</th>
+    <th>방문</th>
+  </tr>
+  <tr th:each="teamCrawl : ${teamCrawlList}">
+    <td th:text="${teamCrawl.ranking}"></td> <!-- 순위 -->
+    <td th:text="${teamCrawl.teamName}"></td> <!-- 팀명 -->
+    <td th:text="${teamCrawl.matches}"></td>  <!-- 경기 -->
+    <td th:text="${teamCrawl.win}"></td> <!-- 승 -->
+    <td th:text="${teamCrawl.loss}"></td> <!-- 패 -->
+    <td th:text="${teamCrawl.draw}"></td> <!-- 무 -->
+    <td th:text="${teamCrawl.winningPercentage}"></td> <!-- 승률 -->
+    <td th:text="${teamCrawl.gameDifference}"></td> <!-- 게임차 -->
+    <td th:text="${teamCrawl.recent10Games}"></td> <!-- 최근 10경기 -->
+    <td th:text="${teamCrawl.streak}"></td> <!-- 연속 -->
+    <td th:text="${teamCrawl.home}"></td> <!-- 홈 -->
+    <td th:text="${teamCrawl.away}"></td> <!-- 어웨이 -->
+  </tr>
+</table>
+
+</body>
+</html>

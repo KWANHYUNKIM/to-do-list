@@ -23,6 +23,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//crawl
+	implementation 'org.jsoup:jsoup:1.15.3'
 
 	// Spring Boot Starter for web applications, includes Spring MVC and embedded Tomcat
 	implementation 'org.springframework.boot:spring-boot-starter-web'
